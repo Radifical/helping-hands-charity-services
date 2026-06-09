@@ -1,9 +1,9 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import Link from "next/link";
 import Reveal from "@/components/Reveal";
 import { testimonials } from "@/lib/data";
-import { site } from "@/lib/site";
 import { ArrowRight } from "@/components/icons";
 import styles from "./Testimonials.module.css";
 
@@ -57,9 +57,9 @@ export default function Testimonials() {
             Stories from our cherished donors.
           </h2>
           <div className={styles.controls}>
-            <a className={`btn btn--glass ${styles.review}`} href={`mailto:${site.email}?subject=My%20Helping%20Hands%20review`}>
-              Leave a review
-            </a>
+            <Link className={`btn btn--glass ${styles.review}`} href="/share-your-story">
+              Share your story
+            </Link>
             <div className={styles.arrows} aria-hidden="true">
               <button
                 type="button"

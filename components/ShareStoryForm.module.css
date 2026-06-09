@@ -1,0 +1,148 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.roleRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.role {
+  padding: 12px 16px;
+  border-radius: var(--r-md);
+  border: 1.5px solid var(--line-strong);
+  background: rgba(238, 244, 249, 0.6);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.98rem;
+  color: var(--ink-soft);
+  transition: all 0.22s var(--ease);
+}
+
+.roleActive {
+  border-color: var(--brand);
+  background: #fff;
+  color: var(--ink);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.label {
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+}
+
+.input {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  color: var(--ink);
+  background: rgba(238, 244, 249, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7);
+  border-radius: var(--r-md);
+  padding: 13px 15px;
+  width: 100%;
+  appearance: none;
+  transition: border-color 0.25s var(--ease), box-shadow 0.25s var(--ease),
+    background-color 0.25s var(--ease);
+}
+
+.input:focus {
+  outline: none;
+  background: #fff;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 4px var(--accent-soft);
+}
+
+.textarea {
+  resize: vertical;
+  min-height: 120px;
+  line-height: 1.55;
+}
+
+.stars {
+  display: flex;
+  gap: 6px;
+}
+
+.star {
+  background: none;
+  border: 0;
+  padding: 2px;
+  color: var(--line-strong);
+  transition: color 0.18s var(--ease), transform 0.18s var(--ease);
+}
+
+.star svg {
+  width: 30px;
+  height: 30px;
+  fill: currentColor;
+}
+
+.star:hover {
+  transform: scale(1.1);
+}
+
+.starOn {
+  color: #f5a623;
+}
+
+.submit {
+  margin-top: 6px;
+  width: 100%;
+}
+
+.fineprint {
+  font-size: 0.82rem;
+  color: var(--ink-muted);
+  text-align: center;
+}
+
+.success {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 14px;
+  padding: 22px 8px;
+}
+
+.successIcon {
+  display: grid;
+  place-items: center;
+  width: 62px;
+  height: 62px;
+  border-radius: var(--r-pill);
+  background: var(--accent-soft);
+  color: var(--accent-deep);
+}
+
+.successTitle {
+  font-size: 1.6rem;
+}
+
+.successBody {
+  color: var(--ink-soft);
+  max-width: 40ch;
+}
+
+@media (min-width: 540px) {
+  .row {
+    grid-template-columns: 1fr 1fr;
+  }
+}

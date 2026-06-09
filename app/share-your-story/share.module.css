@@ -1,0 +1,25 @@
+.body {
+  padding-block: clamp(36px, 5vw, 64px) clamp(48px, 7vw, 96px);
+  max-width: 720px;
+}
+
+.card {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.78) 0%,
+    rgba(255, 255, 255, 0.5) 100%
+  );
+  border: 1px solid var(--glass-line);
+  backdrop-filter: blur(18px) saturate(1.25);
+  -webkit-backdrop-filter: blur(18px) saturate(1.25);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7),
+    0 18px 40px -28px rgba(14, 34, 56, 0.4);
+  border-radius: var(--r-lg);
+  padding: clamp(24px, 4vw, 38px);
+}
+
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .card {
+    background: rgba(255, 255, 255, 0.97);
+  }
+}

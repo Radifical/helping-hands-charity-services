@@ -1,0 +1,59 @@
+/* Shared intro/section styling for the secondary pages
+   (nonprofits, for-donors, for-nonprofits, share-your-story). */
+
+.intro {
+  position: relative;
+  z-index: var(--z-raised);
+  overflow: hidden;
+  background: linear-gradient(180deg, var(--bg-tint) 0%, var(--bg) 92%);
+  padding-top: clamp(48px, 8vw, 96px);
+  padding-bottom: clamp(36px, 5vw, 60px);
+}
+
+.glow {
+  position: absolute;
+  top: -34%;
+  right: -8%;
+  width: 560px;
+  height: 560px;
+  background: radial-gradient(circle, rgba(0, 120, 144, 0.15) 0%, transparent 68%);
+  pointer-events: none;
+}
+
+.glowLeft {
+  position: absolute;
+  bottom: -40%;
+  left: -10%;
+  width: 520px;
+  height: 520px;
+  background: radial-gradient(circle, rgba(0, 60, 130, 0.12) 0%, transparent 68%);
+  pointer-events: none;
+}
+
+.introInner {
+  position: relative;
+  max-width: 760px;
+}
+
+.kicker {
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent-deep);
+  margin-bottom: 14px;
+}
+
+.h1 {
+  font-size: clamp(2.4rem, 6.5vw, 4.4rem);
+  line-height: 0.98;
+}
+
+.lead {
+  margin-top: 22px;
+  max-width: 56ch;
+}
+
+.body {
+  padding-block: clamp(40px, 6vw, 72px);
+}
