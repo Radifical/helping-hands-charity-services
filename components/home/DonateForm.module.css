@@ -150,6 +150,87 @@ html:global(.js) .formCard:global(.is-visible) .form > * {
   gap: 16px;
 }
 
+/* path chooser */
+.modeRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.mode {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  text-align: left;
+  padding: 13px 15px;
+  border-radius: var(--r-md);
+  border: 1.5px solid var(--line-strong);
+  background: rgba(238, 244, 249, 0.6);
+  transition: border-color 0.25s var(--ease), background-color 0.25s var(--ease),
+    box-shadow 0.25s var(--ease);
+}
+
+.modeActive {
+  border-color: var(--brand);
+  background: #fff;
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+.modeTitle {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.98rem;
+  color: var(--ink);
+}
+
+.modeSub {
+  font-size: 0.78rem;
+  color: var(--ink-muted);
+  line-height: 1.3;
+}
+
+.partnerNote {
+  font-size: 0.9rem;
+  color: var(--ink-soft);
+  padding: 8px 12px;
+  border-radius: var(--r-sm);
+  background: var(--accent-soft);
+}
+
+.partnerNote strong {
+  color: var(--accent-deep);
+}
+
+/* collapsible full-donation fields */
+.extra {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.4s var(--ease), opacity 0.3s var(--ease);
+  opacity: 0;
+}
+
+.extraOpen {
+  grid-template-rows: 1fr;
+  opacity: 1;
+}
+
+.extraInner {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.extraOpen .extraInner {
+  padding-top: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .extra {
+    transition: none;
+  }
+}
+
 .row {
   display: grid;
   grid-template-columns: 1fr;

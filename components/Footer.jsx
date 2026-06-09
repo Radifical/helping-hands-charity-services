@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Logo from "./Logo";
-import { site, nav } from "@/lib/site";
+import { site, footerNav } from "@/lib/site";
 import { Instagram, Facebook, ArrowUpRight } from "./icons";
 import styles from "./Footer.module.css";
 
@@ -41,7 +41,7 @@ export default function Footer() {
 
           <nav className={styles.linksCol} aria-label="Footer">
             <h3 className={styles.colTitle}>Explore</h3>
-            {nav.map((item) => (
+            {footerNav.map((item) => (
               <Link key={item.href} href={item.href} className={styles.footLink}>
                 {item.label}
               </Link>
