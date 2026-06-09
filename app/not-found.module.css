@@ -1,0 +1,42 @@
+.wrap {
+  display: flex;
+  align-items: center;
+  min-height: 70vh;
+  padding-block: clamp(64px, 10vw, 120px);
+  text-align: center;
+}
+
+.wrap .container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.code {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(4rem, 14vw, 9rem);
+  line-height: 1;
+  color: var(--accent);
+  letter-spacing: -0.04em;
+}
+
+.title {
+  font-size: clamp(1.8rem, 5vw, 3rem);
+  margin: 12px 0 16px;
+  max-width: 16ch;
+}
+
+.body {
+  color: var(--ink-soft);
+  font-size: 1.05rem;
+  max-width: 44ch;
+  margin-bottom: 32px;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  justify-content: center;
+}

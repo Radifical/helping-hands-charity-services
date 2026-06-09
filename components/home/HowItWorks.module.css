@@ -1,0 +1,222 @@
+.wrap {
+  position: relative;
+  overflow: hidden;
+}
+
+/* blueprint grid ground: the "route map" the journey is drawn on */
+.wrap::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(var(--line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line) 1px, transparent 1px);
+  background-size: 52px 52px;
+  -webkit-mask-image: radial-gradient(
+    ellipse 85% 70% at 50% 42%,
+    #000 25%,
+    transparent 78%
+  );
+  mask-image: radial-gradient(ellipse 85% 70% at 50% 42%, #000 25%, transparent 78%);
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+.wrap > :global(.container) {
+  position: relative;
+}
+
+.head {
+  margin-bottom: clamp(40px, 6vw, 64px);
+}
+
+.title {
+  max-width: 18ch;
+}
+
+/* Connected timeline — no card chrome. The numbered badges carry the
+   sequence; a hairline links them and the brand car drives the route. */
+.stepsWrap {
+  position: relative;
+}
+
+/* mobile: no car (removed entirely, JS skips the work too) */
+.roadCar {
+  display: none;
+}
+
+.steps {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 36px;
+}
+
+.step {
+  position: relative;
+  padding-left: 66px;
+}
+
+/* vertical connector (mobile) — draws in as the step reveals */
+.step::before {
+  content: "";
+  position: absolute;
+  left: 23px;
+  top: 52px;
+  bottom: -36px;
+  width: 2px;
+  background: var(--line-strong);
+  transform-origin: top;
+  transition: transform 0.9s var(--ease) 0.35s;
+}
+
+html:global(.js) .step::before {
+  transform: scaleY(0);
+}
+
+html:global(.js) .step:global(.is-visible)::before {
+  transform: none;
+}
+
+.step:last-child::before {
+  display: none;
+}
+
+.num {
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.05rem;
+  color: var(--accent-deep);
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.85) 0%,
+    rgba(220, 237, 242, 0.55) 100%
+  );
+  border: 1px solid var(--glass-line);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8),
+    0 3px 8px rgba(14, 34, 56, 0.08);
+  border-radius: var(--r-pill);
+}
+
+.stepTitle {
+  font-size: 1.32rem;
+  padding-top: 8px;
+  margin-bottom: 10px;
+}
+
+.stepBody {
+  color: var(--ink-soft);
+  font-size: 0.98rem;
+  line-height: 1.6;
+  max-width: 46ch;
+}
+
+/* Plain stat row — typography, hairlines, no tiles */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 28px 32px;
+  margin-top: clamp(48px, 6vw, 72px);
+  padding-top: clamp(28px, 4vw, 40px);
+  border-top: 1px solid var(--line);
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.statValue {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(2rem, 4vw, 2.8rem);
+  letter-spacing: -0.03em;
+  color: var(--ink);
+}
+
+.statLabel {
+  font-size: 0.92rem;
+  color: var(--ink-muted);
+  line-height: 1.45;
+}
+
+/* stats get their 4-up row earlier than the 5-step timeline goes horizontal */
+@media (min-width: 720px) {
+  .stats {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* 5-step horizontal timeline needs real width; below this it stays a
+   clean vertical timeline (and the car is hidden) */
+@media (min-width: 1040px) {
+  .steps {
+    grid-template-columns: repeat(5, 1fr);
+    gap: 26px;
+  }
+
+  /* the journey car: JS sets --car-x to the current step's position as
+     you scroll (both directions); the transition glides it there */
+  .roadCar {
+    display: block;
+    position: absolute;
+    top: -10px;
+    left: 0;
+    z-index: 1;
+    opacity: var(--car-o, 0);
+    transform: translateX(var(--car-x, 0px));
+    transition: transform 0.8s var(--ease), opacity 0.4s var(--ease);
+    filter: drop-shadow(0 6px 6px rgba(14, 34, 56, 0.18));
+    will-change: transform;
+  }
+
+  .step {
+    padding-left: 0;
+    padding-top: 70px;
+  }
+
+  /* horizontal connector (desktop) — draws left to right */
+  .step::before {
+    left: 58px;
+    right: -26px;
+    top: 23px;
+    bottom: auto;
+    width: auto;
+    height: 2px;
+    transform-origin: left;
+  }
+
+  html:global(.js) .step::before {
+    transform: scaleX(0);
+  }
+
+  html:global(.js) .step:global(.is-visible)::before {
+    transform: none;
+  }
+
+  .num {
+    top: 0;
+    left: 0;
+  }
+
+  .stepTitle {
+    padding-top: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html:global(.js) .step::before {
+    transform: none;
+  }
+  .roadCar {
+    display: none;
+  }
+}

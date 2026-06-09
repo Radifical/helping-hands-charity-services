@@ -1,0 +1,48 @@
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 11px;
+}
+
+.mark {
+  width: 44px;
+  height: auto;
+  flex-shrink: 0;
+}
+
+.light .mark {
+  filter: brightness(0) invert(1);
+  opacity: 0.95;
+}
+
+.words {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.04;
+}
+
+.line1 {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.04rem;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+.line2 {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+
+/* Dark-surface variant (footer) */
+.light .line1 {
+  color: var(--bg);
+}
+
+.light .line2 {
+  color: rgba(244, 248, 251, 0.62);
+}

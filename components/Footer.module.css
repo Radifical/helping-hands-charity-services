@@ -1,0 +1,130 @@
+.footer {
+  position: relative;
+  z-index: var(--z-raised);
+  background: var(--ink);
+  color: var(--bg);
+  padding-block: clamp(48px, 7vw, 80px) 36px;
+  margin-top: clamp(64px, 9vw, 120px);
+  border-top-left-radius: var(--r-xl);
+  border-top-right-radius: var(--r-xl);
+}
+
+.cta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 28px;
+  padding-bottom: clamp(40px, 6vw, 64px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.ctaTitle {
+  color: var(--bg);
+  max-width: 16ch;
+}
+
+.ctaBtn {
+  flex-shrink: 0;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 40px;
+  padding-block: clamp(40px, 6vw, 64px);
+}
+
+.blurb {
+  margin-top: 18px;
+  max-width: 36ch;
+  color: rgba(244, 248, 251, 0.66);
+  font-size: 0.96rem;
+  line-height: 1.6;
+}
+
+.socials {
+  display: flex;
+  gap: 10px;
+  margin-top: 22px;
+}
+
+.socials a {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: var(--r-pill);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  color: var(--bg);
+  transition: background-color 0.25s var(--ease), transform 0.25s var(--ease);
+}
+
+.socials a:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+  transform: translateY(-2px);
+}
+
+.colTitle {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(244, 248, 251, 0.5);
+  margin-bottom: 18px;
+}
+
+.linksCol,
+.contactCol {
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+}
+
+.footLink {
+  color: rgba(244, 248, 251, 0.82);
+  font-size: 0.98rem;
+  width: fit-content;
+  transition: color 0.2s var(--ease);
+}
+
+.footLink:hover {
+  color: #fff;
+}
+
+.address {
+  font-style: normal;
+  color: rgba(244, 248, 251, 0.6);
+  line-height: 1.7;
+  font-size: 0.96rem;
+}
+
+.bottom {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-top: 32px;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  color: rgba(244, 248, 251, 0.55);
+  font-size: 0.9rem;
+}
+
+.legal {
+  display: flex;
+  gap: 22px;
+}
+
+.legal a:hover {
+  color: #fff;
+}
+
+@media (min-width: 720px) {
+  .grid {
+    grid-template-columns: 1.6fr 1fr 1.1fr;
+    gap: 48px;
+  }
+}

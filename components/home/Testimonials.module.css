@@ -1,0 +1,229 @@
+.wrap {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(160deg, #d6e8f5 0%, #e6f1f8 48%, #d3e9ee 100%);
+  border-radius: var(--r-xl);
+  margin-inline: clamp(8px, 2vw, 20px);
+}
+
+/* drifting color fields behind the glass cards */
+.wrap::before,
+.wrap::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  animation: orb 13s var(--ease) infinite;
+}
+
+.wrap::before {
+  width: 480px;
+  height: 480px;
+  top: -18%;
+  right: -6%;
+  background: radial-gradient(circle, rgba(0, 120, 144, 0.2) 0%, transparent 66%);
+}
+
+.wrap::after {
+  width: 560px;
+  height: 560px;
+  bottom: -28%;
+  left: -10%;
+  background: radial-gradient(circle, rgba(0, 60, 130, 0.18) 0%, transparent 66%);
+  animation-delay: -6s;
+}
+
+.wrap > :global(.container) {
+  position: relative;
+}
+
+.head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: clamp(28px, 4vw, 44px);
+}
+
+.title {
+  max-width: 16ch;
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.review {
+  padding: 11px 20px;
+}
+
+.arrows {
+  display: none;
+  gap: 8px;
+}
+
+.arrow {
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  border-radius: var(--r-pill);
+  border: 1px solid var(--glass-line);
+  background: var(--glass-bg-strong);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: var(--ink);
+  transition: background-color 0.25s var(--ease), opacity 0.25s var(--ease),
+    transform 0.25s var(--ease);
+}
+
+.arrow:first-child {
+  transform: rotate(180deg);
+}
+
+.arrow:hover:not(:disabled) {
+  background: #fff;
+}
+
+.arrow:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+/* Horizontal scroll-snap rail (swipe on touch, arrows on desktop) */
+.track {
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  padding-block: 8px clamp(8px, 2vw, 16px);
+}
+
+.track::-webkit-scrollbar {
+  display: none;
+}
+
+.rail {
+  display: flex;
+  gap: 18px;
+  width: max-content;
+  padding-inline: var(--gutter);
+}
+
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  flex: 0 0 auto;
+  width: min(86vw, 380px);
+  scroll-snap-align: start;
+  padding: 32px 30px;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.7) 0%,
+    rgba(255, 255, 255, 0.38) 100%
+  );
+  border: 1px solid var(--glass-line);
+  backdrop-filter: blur(16px) saturate(1.35);
+  -webkit-backdrop-filter: blur(16px) saturate(1.35);
+  border-radius: var(--r-lg);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7);
+  transition: transform 0.4s var(--ease), box-shadow 0.4s var(--ease),
+    border-color 0.4s var(--ease);
+}
+
+.card:hover {
+  transform: perspective(800px) translateY(-5px) rotateX(1.6deg);
+  border-color: rgba(255, 255, 255, 0.92);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8),
+    0 14px 24px -16px rgba(14, 34, 56, 0.35);
+}
+
+@keyframes orb {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(14px, -20px);
+  }
+}
+
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .card {
+    background: rgba(255, 255, 255, 0.95);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wrap::before,
+  .wrap::after {
+    animation: none;
+  }
+}
+
+.quoteMark {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 3.4rem;
+  line-height: 0.6;
+  color: var(--accent);
+  height: 26px;
+}
+
+.quote {
+  margin: 0 0 24px;
+  font-size: 1.06rem;
+  line-height: 1.6;
+  color: var(--ink-soft);
+}
+
+.cite {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  margin-top: auto;
+}
+
+.avatar {
+  display: grid;
+  place-items: center;
+  width: 50px;
+  height: 50px;
+  border-radius: var(--r-pill);
+  background: var(--accent-soft);
+  color: var(--accent-deep);
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 0.95rem;
+  flex-shrink: 0;
+}
+
+.name {
+  display: block;
+  font-weight: 700;
+  color: var(--ink);
+  font-size: 0.98rem;
+}
+
+.role {
+  display: block;
+  font-size: 0.86rem;
+  color: var(--ink-muted);
+}
+
+@media (min-width: 860px) {
+  .arrows {
+    display: flex;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .track {
+    scroll-behavior: auto;
+  }
+}
