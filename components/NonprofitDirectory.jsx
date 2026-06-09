@@ -2,10 +2,30 @@
 
 import { useMemo, useState } from "react";
 import Link from "next/link";
-import { partners, partnerCategories } from "@/lib/partners";
+import {
+  partners,
+  partnerCategories,
+  popularPartners,
+} from "@/lib/partners";
 import PartnerMark from "@/components/PartnerMark";
 import { ArrowUpRight } from "@/components/icons";
 import styles from "./NonprofitDirectory.module.css";
+
+function PartnerCard({ p }) {
+  return (
+    <Link href={`/${p.slug}`} className={styles.card}>
+      <PartnerMark partner={p} variant="sm" />
+      <span className={styles.cardBody}>
+        <span className={styles.cardName}>{p.name}</span>
+        <span className={styles.cardCat}>{p.category}</span>
+        <span className={styles.cardMission}>{p.mission}</span>
+      </span>
+      <span className={styles.cardArrow} aria-hidden="true">
+        <ArrowUpRight size={16} />
+      </span>
+    </Link>
+  );
+}
 
 export default function NonprofitDirectory() {
   const [query, setQuery] = useState("");
@@ -25,8 +45,32 @@ export default function NonprofitDirectory() {
       .sort((a, b) => a.name.localeCompare(b.name));
   }, [query, cat]);
 
+  const isBrowsing = !query.trim() && cat === "All";
+
   return (
     <>
+      {isBrowsing && (
+        <section className={styles.popular}>
+          <div className={styles.popularHead}>
+            <h2 className={styles.popularTitle}>Popular picks</h2>
+            <p className={styles.popularSub}>
+              Causes our donors choose most often.
+            </p>
+          </div>
+          <ul className={styles.grid}>
+            {popularPartners.map((p) => (
+              <li key={p.slug}>
+                <PartnerCard p={p} />
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+
+      <h2 className={styles.allTitle}>
+        {isBrowsing ? "All nonprofits" : "Results"}
+      </h2>
+
       <div className={styles.controls}>
         <label className={styles.search}>
           <span className="sr-only">Search nonprofits</span>
@@ -77,17 +121,7 @@ export default function NonprofitDirectory() {
         <ul className={styles.grid}>
           {results.map((p) => (
             <li key={p.slug}>
-              <Link href={`/${p.slug}`} className={styles.card}>
-                <PartnerMark partner={p} variant="sm" />
-                <span className={styles.cardBody}>
-                  <span className={styles.cardName}>{p.name}</span>
-                  <span className={styles.cardCat}>{p.category}</span>
-                  <span className={styles.cardMission}>{p.mission}</span>
-                </span>
-                <span className={styles.cardArrow} aria-hidden="true">
-                  <ArrowUpRight size={16} />
-                </span>
-              </Link>
+              <PartnerCard p={p} />
             </li>
           ))}
         </ul>
