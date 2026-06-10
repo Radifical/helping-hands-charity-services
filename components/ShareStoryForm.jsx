@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { submitForm } from "@/lib/forms";
 import { Check, ArrowUpRight } from "@/components/icons";
 import styles from "./ShareStoryForm.module.css";
 
@@ -29,15 +30,21 @@ function Stars({ value, onChange }) {
 export default function ShareStoryForm() {
   const [role, setRole] = useState("donor");
   const [rating, setRating] = useState(5);
-  const [submitted, setSubmitted] = useState(false);
+  const [status, setStatus] = useState("idle"); // idle | sending | done | error
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
-    // Placeholder: send to review inbox for approval before publishing.
-    setSubmitted(true);
+    const formEl = e.currentTarget;
+    setStatus("sending");
+    try {
+      await submitForm("story", formEl);
+      setStatus("done");
+    } catch {
+      setStatus("error");
+    }
   }
 
-  if (submitted) {
+  if (status === "done") {
     return (
       <div className={styles.success} role="status">
         <span className={styles.successIcon} aria-hidden="true">
@@ -54,6 +61,10 @@ export default function ShareStoryForm() {
 
   return (
     <form className={styles.form} onSubmit={handleSubmit} noValidate>
+      <input type="text" name="_gotcha" className={styles.hp} tabIndex={-1} autoComplete="off" aria-hidden="true" />
+      <input type="hidden" name="_subject" value="New story / review submission" readOnly />
+      <input type="hidden" name="role" value={role} readOnly />
+
       <div className={styles.roleRow} role="tablist" aria-label="I am a">
         <button
           type="button"
@@ -114,8 +125,14 @@ export default function ShareStoryForm() {
         <input className={styles.input} type="email" name="email" required autoComplete="email" />
       </label>
 
-      <button type="submit" className={`btn btn--primary ${styles.submit}`}>
-        Submit my story
+      {status === "error" && (
+        <p className={styles.errorMsg} role="alert">
+          Something went wrong. Please try again.
+        </p>
+      )}
+
+      <button type="submit" className={`btn btn--primary ${styles.submit}`} disabled={status === "sending"}>
+        {status === "sending" ? "Sending…" : "Submit my story"}
         <span className="btn__arrow" aria-hidden="true">
           <ArrowUpRight size={13} />
         </span>

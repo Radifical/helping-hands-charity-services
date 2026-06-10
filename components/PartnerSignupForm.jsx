@@ -1,22 +1,30 @@
 "use client";
 
 import { useState } from "react";
+import { submitForm } from "@/lib/forms";
 import { Check, ArrowUpRight } from "@/components/icons";
 import styles from "./PartnerSignupForm.module.css";
 
 /**
  * Nonprofit partner application. Minimal by design: charity name, contact,
- * email, phone, and a 501(c)(3) certification. Wire handleSubmit to your CRM.
+ * email, phone, and a 501(c)(3) certification. Submits to Formspree.
  */
 export default function PartnerSignupForm() {
-  const [submitted, setSubmitted] = useState(false);
+  const [status, setStatus] = useState("idle"); // idle | sending | done | error
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
-    setSubmitted(true);
+    const formEl = e.currentTarget;
+    setStatus("sending");
+    try {
+      await submitForm("partner", formEl);
+      setStatus("done");
+    } catch {
+      setStatus("error");
+    }
   }
 
-  if (submitted) {
+  if (status === "done") {
     return (
       <div className={styles.success} role="status">
         <span className={styles.successIcon} aria-hidden="true">
@@ -33,6 +41,9 @@ export default function PartnerSignupForm() {
 
   return (
     <form className={styles.form} onSubmit={handleSubmit} noValidate>
+      <input type="text" name="_gotcha" className={styles.hp} tabIndex={-1} autoComplete="off" aria-hidden="true" />
+      <input type="hidden" name="_subject" value="New nonprofit partner application" readOnly />
+
       <label className={styles.field}>
         <span className={styles.label}>Charity name</span>
         <input className={styles.input} name="charity" required autoComplete="organization" />
@@ -59,8 +70,14 @@ export default function PartnerSignupForm() {
         <span>I certify that our organization is a registered 501(c)(3) nonprofit.</span>
       </label>
 
-      <button type="submit" className={`btn btn--primary ${styles.submit}`}>
-        Apply to partner
+      {status === "error" && (
+        <p className={styles.errorMsg} role="alert">
+          Something went wrong. Please try again or email us.
+        </p>
+      )}
+
+      <button type="submit" className={`btn btn--primary ${styles.submit}`} disabled={status === "sending"}>
+        {status === "sending" ? "Sending…" : "Apply to partner"}
         <span className="btn__arrow" aria-hidden="true">
           <ArrowUpRight size={13} />
         </span>
