@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import Reveal from "@/components/Reveal";
 import { team, values, posts, formatDate } from "@/lib/data";
 import { site } from "@/lib/site";
@@ -46,6 +47,16 @@ export default function AboutPage() {
             <h2 className={`h2 ${styles.storyTitle}`}>
               A simple idea: more of the car, to more of the cause.
             </h2>
+            <div className={styles.storyPhoto}>
+              <Image
+                src="/people/donor-wave.jpg"
+                alt="A donor smiling from the car she gave to charity"
+                fill
+                quality={90}
+                sizes="(max-width: 720px) 100vw, 480px"
+                className={styles.storyPhotoImg}
+              />
+            </div>
           </Reveal>
           <Reveal className={styles.storyBody} delay={80}>
             <p>

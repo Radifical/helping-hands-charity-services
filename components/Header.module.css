@@ -14,6 +14,14 @@
   box-shadow: var(--shadow-sm);
 }
 
+/* While the mobile menu is open the bar is fully opaque (no page content
+   peeking through the glass at the seam). */
+.menuActive {
+  background: var(--bg);
+  backdrop-filter: none;
+  border-bottom-color: var(--line);
+}
+
 .bar {
   display: flex;
   align-items: center;
@@ -106,26 +114,36 @@
   color: var(--ink);
 }
 
-/* Mobile slide-down panel */
+/* Mobile menu — portaled to <body>, covers the viewport below the bar.
+   Own GPU layer + opaque bg so backdrop-filter sections never bleed through. */
 .mobilePanel {
   position: fixed;
   inset: 74px 0 0 0;
   z-index: var(--z-overlay);
   background: var(--bg);
+  isolation: isolate;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  overflow-y: auto;
   padding: 24px var(--gutter) calc(32px + env(safe-area-inset-bottom));
-  transform: translateY(-12px);
+  transform: translate3d(0, -12px, 0);
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.35s var(--ease), transform 0.35s var(--ease);
 }
 
 .panelOpen {
-  transform: none;
+  transform: translate3d(0, 0, 0);
   opacity: 1;
   pointer-events: auto;
+}
+
+/* the portaled panel only needs to show on mobile widths */
+@media (min-width: 1080px) {
+  .mobilePanel {
+    display: none;
+  }
 }
 
 .mobileNav {

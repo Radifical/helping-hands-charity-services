@@ -1,0 +1,102 @@
+.section {
+  position: relative;
+}
+
+/* the colored band; overflow visible so the figure can pop out the top */
+.band {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+  background: linear-gradient(135deg, #022a52 0%, #013a64 52%, #00586d 100%);
+  border-radius: var(--r-xl);
+  padding: clamp(32px, 5vw, 56px);
+  overflow: hidden;
+}
+
+.glowA,
+.glowB {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.glowA {
+  width: 420px;
+  height: 420px;
+  top: -30%;
+  right: 18%;
+  background: radial-gradient(circle, rgba(64, 200, 224, 0.22) 0%, transparent 65%);
+}
+
+.glowB {
+  width: 360px;
+  height: 360px;
+  bottom: -40%;
+  left: -6%;
+  background: radial-gradient(circle, rgba(120, 170, 255, 0.16) 0%, transparent 65%);
+}
+
+.copy {
+  position: relative;
+  z-index: 2;
+  max-width: 38ch;
+}
+
+.title {
+  font-size: clamp(1.9rem, 4vw, 3rem);
+  line-height: 1.02;
+  color: #fff;
+}
+
+.sub {
+  margin-top: 16px;
+  color: rgba(235, 244, 251, 0.86);
+  font-size: 1.05rem;
+  line-height: 1.6;
+}
+
+.ctas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 28px;
+}
+
+/* figure: bottom-anchored, sits within the band on mobile */
+.figure {
+  position: relative;
+  z-index: 2;
+  justify-self: center;
+  width: min(80%, 320px);
+  aspect-ratio: 1100 / 968;
+}
+
+.figureImg {
+  object-fit: contain;
+  object-position: bottom;
+  filter: drop-shadow(0 24px 30px rgba(0, 12, 28, 0.45));
+}
+
+@media (min-width: 880px) {
+  .band {
+    grid-template-columns: 1.15fr 0.85fr;
+    align-items: stretch;
+    min-height: 320px;
+    padding-bottom: 0;
+  }
+
+  .copy {
+    align-self: center;
+    padding-block: clamp(32px, 5vw, 56px);
+  }
+
+  /* she stands on the band floor, filling the right side */
+  .figure {
+    justify-self: end;
+    align-self: end;
+    width: min(100%, 460px);
+    height: 100%;
+    aspect-ratio: auto;
+  }
+}

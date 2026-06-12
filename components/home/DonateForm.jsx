@@ -38,7 +38,7 @@ function YesNo({ name }) {
 }
 
 export default function DonateForm({ partner = null }) {
-  const [mode, setMode] = useState("full");
+  const [mode, setMode] = useState("reach-out");
   const [notListed, setNotListed] = useState(false);
   const [status, setStatus] = useState("idle"); // idle | sending | done | error
 
@@ -104,27 +104,32 @@ export default function DonateForm({ partner = null }) {
               <input type="hidden" name="_subject" value={`New vehicle donation${partner ? ` — ${partner.name}` : ""}`} readOnly />
               <input type="hidden" name="formType" value={full ? "Full donation" : "Callback request"} readOnly />
 
-              {/* path chooser */}
+              {/* path chooser — two clear options separated by "or" */}
               <div className={styles.modeRow} role="tablist" aria-label="How would you like to donate?">
                 <button type="button" role="tab" aria-selected={mode === "reach-out"} className={`${styles.mode} ${!full ? styles.modeActive : ""}`} onClick={() => setMode("reach-out")}>
                   <span className={styles.modeTitle}>Have us reach out</span>
-                  <span className={styles.modeSub}>Leave your details, we call you</span>
+                  <span className={styles.modeSub}>Leave your details, we&apos;ll be in touch</span>
                 </button>
+                <span className={styles.orDivider} aria-hidden="true">or</span>
                 <button type="button" role="tab" aria-selected={full} className={`${styles.mode} ${full ? styles.modeActive : ""}`} onClick={() => setMode("full")}>
                   <span className={styles.modeTitle}>Donate online now</span>
                   <span className={styles.modeSub}>Complete it all yourself</span>
                 </button>
               </div>
 
-              {/* nonprofit selection */}
-              {partner ? (
+              {/* nonprofit selection: locked on partner pages; only shown in the
+                  full-donation path on the general form (the reach-out path
+                  stays short, we sort the cause out on the call) */}
+              {partner && (
                 <>
                   <input type="hidden" name="nonprofit" value={partner.name} readOnly />
                   <p className={styles.partnerNote}>
                     Supporting <strong>{partner.name}</strong>
                   </p>
                 </>
-              ) : (
+              )}
+
+              {!partner && full && (
                 <label className={styles.field}>
                   <span className={styles.label}>Choose your nonprofit</span>
                   <select
@@ -142,7 +147,7 @@ export default function DonateForm({ partner = null }) {
                 </label>
               )}
 
-              {!partner && notListed && (
+              {!partner && full && notListed && (
                 <label className={styles.field}>
                   <span className={styles.label}>Nonprofit name</span>
                   <input className={styles.input} name="nonprofitOther" placeholder="Type the nonprofit you'd like to support" />
@@ -165,6 +170,18 @@ export default function DonateForm({ partner = null }) {
                   <input className={styles.input} type="tel" name="phone" required autoComplete="tel" />
                 </label>
               </div>
+
+              <fieldset className={styles.conditions}>
+                <legend className={styles.label}>Preferred contact method</legend>
+                <div className={styles.chips}>
+                  {["Call", "Text", "Email"].map((c, i) => (
+                    <label key={c} className={styles.chip}>
+                      <input type="radio" name="preferredContact" value={c} defaultChecked={i === 0} />
+                      <span>{c}</span>
+                    </label>
+                  ))}
+                </div>
+              </fieldset>
 
               {/* Full-donation fields */}
               <div className={`${styles.extra} ${full ? styles.extraOpen : ""}`} aria-hidden={!full}>
@@ -267,11 +284,7 @@ export default function DonateForm({ partner = null }) {
               )}
 
               <button type="submit" className={`btn btn--primary ${styles.submit}`} disabled={status === "sending"}>
-                {status === "sending"
-                  ? "Sending…"
-                  : full
-                  ? "Get my best offer"
-                  : "Request a callback"}
+                {status === "sending" ? "Sending…" : "Submit"}
                 <span className="btn__arrow" aria-hidden="true"><ArrowUpRight size={13} /></span>
               </button>
               <p className={styles.fineprint}>

@@ -16,7 +16,7 @@ export default function Hero() {
           fetchPriority="high"
           sizes="100vw"
           className={styles.bgImg}
-          quality={82}
+          quality={88}
         />
         <div className={styles.scrim} />
         <div className={styles.fade} />

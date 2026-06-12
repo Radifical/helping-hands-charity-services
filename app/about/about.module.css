@@ -50,6 +50,20 @@
   max-width: 16ch;
 }
 
+.storyPhoto {
+  position: relative;
+  aspect-ratio: 5 / 4;
+  margin-top: 24px;
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  border: 1px solid var(--glass-line);
+  box-shadow: 0 16px 34px -24px rgba(14, 34, 56, 0.5);
+}
+
+.storyPhotoImg {
+  object-fit: cover;
+}
+
 .storyBody {
   display: flex;
   flex-direction: column;

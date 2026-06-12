@@ -132,7 +132,7 @@ export default function ShareStoryForm() {
       )}
 
       <button type="submit" className={`btn btn--primary ${styles.submit}`} disabled={status === "sending"}>
-        {status === "sending" ? "Sending…" : "Submit my story"}
+        {status === "sending" ? "Sending…" : "Submit"}
         <span className="btn__arrow" aria-hidden="true">
           <ArrowUpRight size={13} />
         </span>

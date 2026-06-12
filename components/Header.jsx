@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import Link from "next/link";
 import Logo from "./Logo";
 import { nav, site } from "@/lib/site";
@@ -10,6 +11,9 @@ import styles from "./Header.module.css";
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => setMounted(true), []);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
@@ -25,8 +29,41 @@ export default function Header() {
     };
   }, [open]);
 
+  // Rendered into <body> via a portal so the menu is never inside the
+  // backdrop-filtered header (which would otherwise become its containing
+  // block and collapse it, letting page content show through on mobile).
+  const panel = (
+    <div className={`${styles.mobilePanel} ${open ? styles.panelOpen : ""}`}>
+      <nav className={styles.mobileNav} aria-label="Mobile">
+        {nav.map((item) => (
+          <Link
+            key={item.href}
+            href={item.href}
+            className={styles.mobileLink}
+            onClick={() => setOpen(false)}
+          >
+            {item.label}
+            <ArrowUpRight size={18} />
+          </Link>
+        ))}
+      </nav>
+      <div className={styles.mobileFooter}>
+        <a href={`tel:${site.phoneHref}`} className={styles.mobilePhone}>
+          <Phone /> {site.phone}
+        </a>
+        <Link href="/#donate" className="btn btn--primary" onClick={() => setOpen(false)}>
+          Donate Now
+        </Link>
+      </div>
+    </div>
+  );
+
   return (
-    <header className={`${styles.header} ${scrolled ? styles.scrolled : ""}`}>
+    <header
+      className={`${styles.header} ${scrolled ? styles.scrolled : ""} ${
+        open ? styles.menuActive : ""
+      }`}
+    >
       <div className={`container ${styles.bar}`}>
         <Link href="/" className={styles.brand} onClick={() => setOpen(false)}>
           <Logo />
@@ -66,33 +103,7 @@ export default function Header() {
         </div>
       </div>
 
-      <div className={`${styles.mobilePanel} ${open ? styles.panelOpen : ""}`}>
-        <nav className={styles.mobileNav} aria-label="Mobile">
-          {nav.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className={styles.mobileLink}
-              onClick={() => setOpen(false)}
-            >
-              {item.label}
-              <ArrowUpRight size={18} />
-            </Link>
-          ))}
-        </nav>
-        <div className={styles.mobileFooter}>
-          <a href={`tel:${site.phoneHref}`} className={styles.mobilePhone}>
-            <Phone /> {site.phone}
-          </a>
-          <Link
-            href="/#donate"
-            className="btn btn--primary"
-            onClick={() => setOpen(false)}
-          >
-            Donate Now
-          </Link>
-        </div>
-      </div>
+      {mounted ? createPortal(panel, document.body) : null}
     </header>
   );
 }

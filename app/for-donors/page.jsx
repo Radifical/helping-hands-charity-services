@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import FAQAccordion from "@/components/FAQAccordion";
 import Reveal from "@/components/Reveal";
 import { donorFaqGroups } from "@/lib/faqs";
@@ -73,22 +74,34 @@ export default function ForDonorsPage() {
       </section>
 
       <section className={`section ${styles.benefitsWrap}`}>
-        <div className="container">
-          <Reveal>
-            <h2 className={`h2 ${styles.benefitsTitle}`}>
-              Why donate your vehicle?
-            </h2>
+        <div className={`container ${styles.benefitsLayout}`}>
+          <div>
+            <Reveal>
+              <h2 className={`h2 ${styles.benefitsTitle}`}>
+                Why donate your vehicle?
+              </h2>
+            </Reveal>
+            <ul className={styles.benefits}>
+              {benefits.map((b, i) => (
+                <Reveal as="li" key={b} delay={(i % 3) * 80} className={styles.benefit}>
+                  <span className={styles.tick} aria-hidden="true">
+                    <Check size={14} />
+                  </span>
+                  {b}
+                </Reveal>
+              ))}
+            </ul>
+          </div>
+          <Reveal className={styles.benefitsPhoto} delay={120}>
+            <Image
+              src="/people/adopt-dog.jpg"
+              alt="A rescue dog meeting a visitor at an animal shelter"
+              fill
+              quality={90}
+              sizes="(max-width: 900px) 100vw, 480px"
+              className={styles.benefitsPhotoImg}
+            />
           </Reveal>
-          <ul className={styles.benefits}>
-            {benefits.map((b, i) => (
-              <Reveal as="li" key={b} delay={(i % 3) * 80} className={styles.benefit}>
-                <span className={styles.tick} aria-hidden="true">
-                  <Check size={14} />
-                </span>
-                {b}
-              </Reveal>
-            ))}
-          </ul>
         </div>
       </section>
 

@@ -77,7 +77,7 @@ export default function PartnerSignupForm() {
       )}
 
       <button type="submit" className={`btn btn--primary ${styles.submit}`} disabled={status === "sending"}>
-        {status === "sending" ? "Sending…" : "Apply to partner"}
+        {status === "sending" ? "Sending…" : "Submit"}
         <span className="btn__arrow" aria-hidden="true">
           <ArrowUpRight size={13} />
         </span>

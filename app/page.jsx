@@ -1,6 +1,8 @@
 import Hero from "@/components/home/Hero";
 import Partners from "@/components/home/Partners";
 import HowItWorks from "@/components/home/HowItWorks";
+import ImpactStrip from "@/components/home/ImpactStrip";
+import CutoutCta from "@/components/home/CutoutCta";
 import Testimonials from "@/components/home/Testimonials";
 import DonateForm from "@/components/home/DonateForm";
 import { site } from "@/lib/site";
@@ -52,7 +54,9 @@ export default function HomePage() {
       <Hero />
       <Partners />
       <HowItWorks />
+      <ImpactStrip />
       <Testimonials />
+      <CutoutCta />
       <DonateForm />
     </>
   );
