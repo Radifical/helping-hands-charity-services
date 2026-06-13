@@ -6,6 +6,7 @@ import { steps } from "@/lib/data";
 import PartnerMark from "@/components/PartnerMark";
 import DonateForm from "@/components/home/DonateForm";
 import Reveal from "@/components/Reveal";
+import LiteVideo from "@/components/LiteVideo";
 import { ArrowUpRight, Check, ArrowRight } from "@/components/icons";
 import styles from "./partner.module.css";
 
@@ -85,6 +86,26 @@ export default function PartnerPage({ params }) {
           </ul>
         </div>
       </section>
+
+      {partner.video && (
+        <section className={`section ${styles.videoWrap}`}>
+          <div className={`container ${styles.videoInner}`}>
+            <Reveal>
+              <h2 className={`h2 ${styles.videoTitle}`}>
+                See {partner.name} in action.
+              </h2>
+            </Reveal>
+            <Reveal className={styles.video} delay={80}>
+              <LiteVideo
+                provider={partner.video.provider}
+                id={partner.video.id}
+                hash={partner.video.hash}
+                title={`Watch the ${partner.name} story`}
+              />
+            </Reveal>
+          </div>
+        </section>
+      )}
 
       <DonateForm partner={partner} />
 
