@@ -67,10 +67,17 @@
 .storyBody {
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  gap: 16px;
   color: var(--ink-soft);
   font-size: 1.05rem;
-  line-height: 1.7;
+  line-height: 1.6;
+}
+
+/* natural greedy wrapping (pretty/balance can read as uneven spacing in
+   narrow prose columns on some mobile browsers) */
+.storyBody p {
+  text-wrap: normal;
+  hyphens: none;
 }
 
 /* Values — definition list with hairlines */
